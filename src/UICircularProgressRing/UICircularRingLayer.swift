@@ -140,7 +140,7 @@ class UICircularRingLayer: CAShapeLayer {
      */
     private func drawOuterRing() {
         guard ring.outerRingWidth > 0 else { return }
-        let center: CGPoint = CGPoint(x: bounds.midX, y: bounds.midY)
+        let center: CGPoint = CGPoint(x: bounds.midX, y: bounds.midY * 1.6)
 
         let knobSize = ring.valueKnobStyle?.size ?? 0
         let borderWidth: CGFloat
@@ -153,7 +153,7 @@ class UICircularRingLayer: CAShapeLayer {
         let offSet = max(ring.outerRingWidth, ring.innerRingWidth) / 2
                         + (knobSize / 4)
                         + (borderWidth * 2)
-        let outerRadius: CGFloat = min(bounds.width, bounds.height) / 2 - offSet
+        let outerRadius: CGFloat = min(bounds.width, bounds.height) / 1.6 - offSet
         let start: CGFloat = ring.fullCircle ? 0 : ring.startAngle.rads
         let end: CGFloat = ring.fullCircle ? .pi * 2 : ring.endAngle.rads
         let outerPath = UIBezierPath(arcCenter: center,
@@ -177,7 +177,7 @@ class UICircularRingLayer: CAShapeLayer {
     private func drawInnerRing(in ctx: CGContext) {
         guard ring.innerRingWidth > 0 else { return }
 
-        let center: CGPoint = CGPoint(x: bounds.midX, y: bounds.midY)
+        let center: CGPoint = CGPoint(x: bounds.midX, y: bounds.midY * 1.6)
 
         let innerEndAngle = calculateInnerEndAngle()
         let radiusIn = calculateInnerRadius()
@@ -247,7 +247,7 @@ class UICircularRingLayer: CAShapeLayer {
             let offSet = max(ring.outerRingWidth, ring.innerRingWidth) / 2
                             + ((valueKnobStyle?.size ?? 0) / 4)
                             + (borderWidth * 2)
-            let outerRadius: CGFloat = min(bounds.width, bounds.height) / 2 - offSet
+            let outerRadius: CGFloat = min(bounds.width, bounds.height) / 1.6 - offSet
             let borderStartAngle = ring.outerCapStyle == .butt ? ring.startAngle - borderWidth : ring.startAngle
             let borderEndAngle = ring.outerCapStyle == .butt ? ring.endAngle + borderWidth : ring.endAngle
             let start: CGFloat = ring.fullCircle ? 0 : borderStartAngle.rads
@@ -305,13 +305,13 @@ class UICircularRingLayer: CAShapeLayer {
         case .inside:
             let difference = ring.outerRingWidth * 2 + ring.innerRingSpacing + knobSize / 2
             let offSet = ring.innerRingWidth / 2 + knobSize / 2
-            radiusIn = (min(bounds.width - difference, bounds.height - difference) / 2) - offSet
+            radiusIn = (min(bounds.width - difference, bounds.height - difference) / 1.5) - offSet
         case .bordered(let borderWidth, _):
             let offSet = (max(ring.outerRingWidth, ring.innerRingWidth) / 2) + (knobSize / 4) + (borderWidth * 2)
-            radiusIn = (min(bounds.width, bounds.height) / 2) - offSet
+            radiusIn = (min(bounds.width, bounds.height) / 1.6) - offSet
         default:
             let offSet = (max(ring.outerRingWidth, ring.innerRingWidth) / 2) + (knobSize / 4)
-            radiusIn = (min(bounds.width, bounds.height) / 2) - offSet
+            radiusIn = (min(bounds.width, bounds.height) / 1.6) - offSet
         }
 
         return radiusIn
